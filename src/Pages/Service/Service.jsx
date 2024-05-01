@@ -25,6 +25,10 @@ const Service = () => {
           <ServiceCart key={idex} serv={serv}></ServiceCart>
         ))}
       </div>
+
+      <div className="grid justify-center mt-12">
+        <button className="btn bg-[#FF3811]  text-white">More Services</button>
+      </div>
     </div>
   );
 };

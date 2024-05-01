@@ -91,9 +91,11 @@ const Naver = () => {
           <ul className="menu menu-horizontal px-1 gap-5">{navlinks}</ul>
         </div>
         <div className="navbar-end">
-          <a className="btn border uppercase border-[#FF3811] text-[#FF3811]">
-            Apponment
-          </a>
+          <Link to={'/login'}>
+            <a className="btn border uppercase border-[#FF3811] text-[#FF3811]">
+              Apponment
+            </a>
+          </Link>
         </div>
       </div>
     </div>
