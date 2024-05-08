@@ -12,6 +12,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Login from './Form/Login';
 import Register from './Form/Register';
 import AuthProvider from './AuthProvider/AuthProvider';
+import CheackOut from './Pages/Service/CheackOut';
+import Bookings from './Pages/Service/Bookings';
+import PrivtedRout from './PrivtedRouted/PrivtedRout';
 
 const router = createBrowserRouter([
   {
@@ -45,6 +48,20 @@ const router = createBrowserRouter([
       {
         path: '/register',
         element: <Register></Register>,
+      },
+      {
+        path: '/checkout/:id',
+        element: <CheackOut></CheackOut>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/servicess/${params.id}`),
+      },
+      {
+        path: '/booking',
+        element: (
+          <PrivtedRout>
+            <Bookings></Bookings>
+          </PrivtedRout>
+        ),
       },
     ],
   },

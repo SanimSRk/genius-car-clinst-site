@@ -1,14 +1,18 @@
 import { FaFacebook, FaGithub, FaTwitter } from 'react-icons/fa6';
 import loginIMg from '..//assets/images/login/login.svg';
 import { FcGoogle } from 'react-icons/fc';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useContext } from 'react';
 
 import { AuthContext } from '../AuthProvider/AuthProvider';
+import { linkWithCredential } from 'firebase/auth';
+import axios from 'axios';
 
 const Login = () => {
   const { singUsers } = useContext(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -19,7 +23,18 @@ const Login = () => {
     const { email, password } = data;
     singUsers(email, password)
       .then(result => {
-        console.log(result);
+        console.log(result.user);
+
+        const user = { email };
+        axios
+          .post('http://localhost:5000/jwt', user, { withCredentials: true })
+
+          .then(res => {
+            console.log(res.data);
+            if (res.data.success) {
+              navigate(location.state || '/');
+            }
+          });
       })
       .catch(error => {
         console.log(error);

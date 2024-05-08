@@ -1,6 +1,11 @@
 import { Link, NavLink } from 'react-router-dom';
 import logo from '../.././assets/logo.svg';
+import { useContext } from 'react';
+import { AuthContext } from '../../AuthProvider/AuthProvider';
+
 const Naver = () => {
+  const { user, logOutUsers } = useContext(AuthContext);
+  console.log(user);
   const navlinks = (
     <>
       <NavLink
@@ -23,6 +28,7 @@ const Naver = () => {
       >
         About
       </NavLink>
+
       <NavLink
         to={'/service'}
         className={({ isActive }) =>
@@ -33,6 +39,18 @@ const Naver = () => {
       >
         Services
       </NavLink>
+      {user && (
+        <NavLink
+          to={'/booking'}
+          className={({ isActive }) =>
+            isActive
+              ? 'px-4  py-2  text-[#FF3811] border border-[#FF3811] font-semibold'
+              : 'font-semibold px-4  py-2 rounded-lg bg-base-100'
+          }
+        >
+          My Booking
+        </NavLink>
+      )}
       <NavLink
         to={'/blogs'}
         className={({ isActive }) =>
@@ -55,6 +73,15 @@ const Naver = () => {
       </NavLink>
     </>
   );
+  const hnadileClickLogout = () => {
+    logOutUsers()
+      .then(result => {
+        console.log(result.user);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
   return (
     <div className="  w-full ">
       <div className="navbar bg-base-100 ">
@@ -90,12 +117,23 @@ const Naver = () => {
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1 gap-5">{navlinks}</ul>
         </div>
-        <div className="navbar-end">
-          <Link to={'/login'}>
-            <a className="btn border uppercase border-[#FF3811] text-[#FF3811]">
-              Apponment
-            </a>
-          </Link>
+        <div className="navbar-end gap-4">
+          <a className="btn border uppercase border-[#FF3811] text-[#FF3811]">
+            Apponment
+          </a>
+
+          {user ? (
+            <button
+              onClick={hnadileClickLogout}
+              className="btn bg-[#FF3811] text-white"
+            >
+              Logout
+            </button>
+          ) : (
+            <Link to={'/login'}>
+              <button className="btn bg-[#FF3811] text-white">Login</button>
+            </Link>
+          )}
         </div>
       </div>
     </div>

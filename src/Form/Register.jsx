@@ -16,14 +16,7 @@ const Register = () => {
     const { fullName, email, password } = data;
     createUser(email, password)
       .then(result => {
-        console.log(result);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-    updateUserProfile(fullName)
-      .then(result => {
-        console.log(result);
+        console.log(result.user);
       })
       .catch(error => {
         console.log(error);
